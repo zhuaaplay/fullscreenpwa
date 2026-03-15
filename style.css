@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Paksa mode landscape dan fullscreen, abaikan notch */
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: fixed;
+    transform: rotate(0deg);
+    transform-origin: top left;
+    /* Abaikan notch dan area sistem */
+    inset: 0;
+    -webkit-app-region: no-drag;
+    /* Styling dasar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+}
+
+.container p {
+    font-size: 14px; /* Ukuran teks kecil */
+    color: #000000;
+    text-align: center;
+}
