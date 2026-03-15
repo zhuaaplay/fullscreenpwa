@@ -1,6 +1,8 @@
+// Registrasi Service Worker
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
+        // Sesuaikan path SW dengan repository
+        navigator.serviceWorker.register('/fullscreenpwa/sw.js')
             .then(registration => {
                 console.log('Service Worker terdaftar:', registration.scope);
             })
@@ -10,22 +12,40 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+// Paksa fullscreen dan landscape
 window.addEventListener('load', () => {
-    if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen({ navigationUI: "hide" })
-            .catch(err => console.log('Gagal masuk fullscreen:', err));
-    }
+    // Paksa fullscreen tanpa batasan
+    const enterFullscreen = () => {
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen({
+                navigationUI: "hide",
+                screenOrientation: {
+                    angle: 90 // Paksa landscape
+                }
+            }).catch(err => console.log('Gagal masuk fullscreen:', err));
+        } else if (document.documentElement.webkitRequestFullscreen) {
+            // Khusus untuk browser berbasis WebKit
+            document.documentElement.webkitRequestFullscreen({
+                navigationUI: "hide"
+            });
+            screen.orientation.lock('landscape').catch(err => console.log('Gagal kunci orientasi:', err));
+        }
+    };
 
+    enterFullscreen();
+    window.addEventListener('resize', enterFullscreen);
+
+    // Cek orientasi
     function checkOrientation() {
         if (window.innerHeight > window.innerWidth) {
             alert("Mohon putar perangkat ke mode landscape!");
         }
     }
-
     window.addEventListener('resize', checkOrientation);
     checkOrientation();
 });
 
+// Prompt instalasi mirip GitHub
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
@@ -41,16 +61,12 @@ window.addEventListener('beforeinstallprompt', (e) => {
     installBtn.style.backgroundColor = '#2ea44f';
     installBtn.style.color = 'white';
     installBtn.style.cursor = 'pointer';
+    installBtn.style.zIndex = '999';
     document.body.appendChild(installBtn);
 
     installBtn.addEventListener('click', () => {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('Pengguna menerima instalasi');
-            } else {
-                console.log('Pengguna menolak instalasi');
-            }
             deferredPrompt = null;
             installBtn.remove();
         });
