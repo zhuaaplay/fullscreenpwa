@@ -4,26 +4,42 @@
     box-sizing: border-box;
 }
 
-/* Paksa mode landscape dan fullscreen, abaikan notch */
+/* Hapus semua batasan safe zone/punchhole */
 body {
     width: 100vw;
     height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
     overflow: hidden;
     position: fixed;
-    transform: rotate(0deg);
-    transform-origin: top left;
-    /* Abaikan notch dan area sistem */
-    inset: 0;
-    -webkit-app-region: no-drag;
-    /* Styling dasar */
+    /* Paksa konten mengisi seluruh layar */
+    inset: 0 !important;
+    -webkit-inset: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    /* Khusus untuk Android/Chrome */
+    -webkit-overflow-scrolling: touch;
+    -webkit-appearance: none;
+    /* Tampilan teks di tengah */
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #ffffff;
 }
 
+/* Dukungan untuk ukuran layar dinamis */
+@supports (display: grid) {
+    body {
+        width: 100dvw;
+        height: 100dvh;
+        max-width: 100dvw;
+        max-height: 100dvh;
+    }
+}
+
 .container p {
-    font-size: 14px; /* Ukuran teks kecil */
+    font-size: 14px;
     color: #000000;
     text-align: center;
+    z-index: 1; /* Pastikan teks tidak tertutup elemen sistem */
 }
