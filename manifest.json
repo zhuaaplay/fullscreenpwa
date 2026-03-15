@@ -1,7 +1,7 @@
 {
     "name": "Hello World PWA",
     "short_name": "HelloPWA",
-    "start_url": "/",
+    "start_url": "/fullscreenpwa/", /* Sesuaikan dengan path repository agar tidak 404 */
     "display": "fullscreen",
     "orientation": "landscape",
     "background_color": "#ffffff",
@@ -20,7 +20,7 @@
             "purpose": "any maskable"
         }
     ],
-    "description": "Website PWA dengan teks Hello World di tengah, mode landscape fullscreen",
+    "description": "Website PWA dengan teks Hello World fullscreen tanpa safe zone",
     "prefer_related_applications": false,
     "categories": ["utilities"]
 }
