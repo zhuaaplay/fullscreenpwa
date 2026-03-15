@@ -1,11 +1,12 @@
-const CACHE_NAME = 'hello-world-pwa-v1';
+const CACHE_NAME = 'hello-world-pwa-v2';
+// Sesuaikan path cache dengan repository
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/style.css',
-    '/app.js',
-    '/icon.png',
-    '/icon-512.png'
+    '/fullscreenpwa/',
+    '/fullscreenpwa/index.html',
+    '/fullscreenpwa/style.css',
+    '/fullscreenpwa/app.js',
+    '/fullscreenpwa/icon.png',
+    '/fullscreenpwa/icon-512.png'
 ];
 
 // Instalasi Service Worker
@@ -16,7 +17,7 @@ self.addEventListener('install', event => {
     );
 });
 
-// Mengambil sumber dari cache
+// Ambil sumber dari cache
 self.addEventListener('fetch', event => {
     event.respondWith(
         caches.match(event.request)
